@@ -230,6 +230,14 @@ public class Log
     }
 
     /**
+     * Creates a TRACE level entry log message.
+     */
+    public static void entry()
+    {
+        trace("ENTRY");
+    }
+
+    /**
      * Creates a TRACE level entry log message with the given parameter.
      *
      * @param parameterValue The value for the parameter of the calling method.
