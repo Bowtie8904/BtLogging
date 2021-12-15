@@ -317,6 +317,17 @@ public class DefaultLogFormatter extends Formatter
         return prefix;
     }
 
+    /**
+     * Formates the text of the given throwable.
+     * <p>
+     * The default iplementation will return the stacktrace of the throwable as a String.
+     *
+     * @param t
+     *
+     * @return
+     *
+     * @throws IOException
+     */
     protected String getThrowableText(Throwable t) throws IOException
     {
         String trace = null;
@@ -330,6 +341,15 @@ public class DefaultLogFormatter extends Formatter
         return trace;
     }
 
+    /**
+     * Formats the message text of the given record.
+     * <p>
+     * The default implementation will simply return the message of the record.
+     *
+     * @param record
+     *
+     * @return
+     */
     protected String getMessageText(LogRecord record)
     {
         return record.getMessage();

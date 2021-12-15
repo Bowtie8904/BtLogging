@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
+import java.io.File;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -27,6 +28,7 @@ public class Log
 {
     private static final String GLOBAL_LOGGER_NAME = "GLOBAL";
     private static final Logger GLOBAL_LOGGER = LoggerFactory.getLogger(GLOBAL_LOGGER_NAME);
+    private static final String DEFAULT_LOG_FOLDER = "./logs";
 
     static
     {
@@ -37,6 +39,17 @@ public class Log
                 Log.error("Uncaught exception on thread " + t.getName(), e);
             }
         });
+    }
+
+    public static void createDefaultLogFolder()
+    {
+        createLogFolder(DEFAULT_LOG_FOLDER);
+    }
+
+    public static void createLogFolder(String path)
+    {
+        File folder = new File(path);
+        folder.mkdirs();
     }
 
     /**

@@ -17,6 +17,7 @@ public class ConsoleLoggerHandler extends Handler
 {
     /**
      * Creates a new instance with the given configuration.
+     * A {@link DefaultLogFormatter} will be created with the given configuration.
      *
      * @param config
      */
@@ -24,32 +25,49 @@ public class ConsoleLoggerHandler extends Handler
     {
         super();
         setFormatter(new DefaultLogFormatter(config));
+        setLevel(config.level);
     }
 
+    /**
+     * Creates a new instance with the given formatter.
+     *
+     * @param formatter
+     */
     public ConsoleLoggerHandler(Formatter formatter)
     {
         super();
         setFormatter(formatter);
+        setLevel(Level.ALL);
     }
 
+    /**
+     * Creates a new instance with the given configuration.
+     * A {@link DefaultLogFormatter} will be created with a defult configuration.
+     *
+     * @param config
+     */
     public ConsoleLoggerHandler()
     {
         super();
         setFormatter(new DefaultLogFormatter(new LoggerConfiguration()));
+        setLevel(Level.ALL);
     }
 
     @Override
     public void publish(LogRecord record)
     {
-        String text = getFormatter().format(record);
+        if (record.getLevel().intValue() >= getLevel().intValue())
+        {
+            String text = getFormatter().format(record);
 
-        if (record.getLevel().equals(Level.SEVERE) || record.getLevel().equals(Level.WARNING))
-        {
-            System.err.print(text);
-        }
-        else
-        {
-            System.out.print(text);
+            if (record.getLevel().equals(Level.SEVERE) || record.getLevel().equals(Level.WARNING))
+            {
+                System.err.print(text);
+            }
+            else
+            {
+                System.out.print(text);
+            }
         }
     }
 
