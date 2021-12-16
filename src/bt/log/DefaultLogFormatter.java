@@ -72,7 +72,11 @@ public class DefaultLogFormatter extends Formatter
      */
     protected List<Class<?>> initializeInvalidCallerClasses()
     {
-        return new ArrayList<Class<?>>();
+        var list = new ArrayList<Class<?>>();
+
+        list.add(getClass());
+
+        return list;
     }
 
     /**
