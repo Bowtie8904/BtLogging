@@ -49,9 +49,9 @@ public class DefaultLogFormatter extends Formatter
     {
         this.config = config;
         this.invalidCallerClasses = initializeInvalidCallerClasses();
-        addInvalidCallerClasses(config.invalidCallerClasses);
+        addInvalidCallerClasses(config.getInvalidCallerClasses());
         this.invalidCallerPackages = initializeInvalidCallerPackages();
-        addInvalidCallerPackages(config.invalidCallerPackages);
+        addInvalidCallerPackages(config.getInvalidCallerPackages());
     }
 
     /**
@@ -302,22 +302,22 @@ public class DefaultLogFormatter extends Formatter
     {
         String prefix = "";
 
-        if (this.config.printTimestamp)
+        if (this.config.isPrintTimestamp())
         {
             prefix += getTimestampString(record);
         }
 
-        if (this.config.printLogLevel)
+        if (this.config.isPrintLogLevel())
         {
             prefix += getLogLevelString(record.getLevel());
         }
 
-        if (this.config.printThreadName)
+        if (this.config.isPrintThreadName())
         {
             prefix += getThreadNameString();
         }
 
-        if (this.config.printCaller)
+        if (this.config.isPrintCaller())
         {
             prefix += getCallerString();
         }

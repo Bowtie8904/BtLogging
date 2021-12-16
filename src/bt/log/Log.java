@@ -84,7 +84,7 @@ public class Log
      */
     public static void configureDefaultJDKLogger(LoggerConfiguration config)
     {
-        configureDefaultJDKLogger(config.level, new ConsoleLoggerHandler(config));
+        configureDefaultJDKLogger(config.getLevel(), new ConsoleLoggerHandler(config));
     }
 
     /**

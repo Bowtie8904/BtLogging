@@ -59,42 +59,42 @@ public class FileLoggerHandler extends FileHandler
     {
         super(DEFAULT_FILE_PATTERN);
         setFormatter(new DefaultLogFormatter(config));
-        setLevel(config.level);
+        setLevel(config.getLevel());
     }
 
     public FileLoggerHandler(LoggerConfiguration config, String pattern) throws IOException, SecurityException
     {
         super(pattern);
         setFormatter(new DefaultLogFormatter(config));
-        setLevel(config.level);
+        setLevel(config.getLevel());
     }
 
     public FileLoggerHandler(LoggerConfiguration config, String pattern, boolean append) throws IOException, SecurityException
     {
         super(pattern, append);
         setFormatter(new DefaultLogFormatter(config));
-        setLevel(config.level);
+        setLevel(config.getLevel());
     }
 
     public FileLoggerHandler(LoggerConfiguration config, String pattern, int limit, int count) throws IOException, SecurityException
     {
         super(pattern, limit, count);
         setFormatter(new DefaultLogFormatter(config));
-        setLevel(config.level);
+        setLevel(config.getLevel());
     }
 
     public FileLoggerHandler(LoggerConfiguration config, String pattern, int limit, int count, boolean append) throws IOException, SecurityException
     {
         super(pattern, limit, count, append);
         setFormatter(new DefaultLogFormatter(config));
-        setLevel(config.level);
+        setLevel(config.getLevel());
     }
 
     public FileLoggerHandler(LoggerConfiguration config, String pattern, long limit, int count, boolean append) throws IOException
     {
         super(pattern, limit, count, append);
         setFormatter(new DefaultLogFormatter(config));
-        setLevel(config.level);
+        setLevel(config.getLevel());
     }
 
     public FileLoggerHandler(Formatter formatter) throws IOException, SecurityException

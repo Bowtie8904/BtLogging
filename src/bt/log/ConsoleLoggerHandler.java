@@ -25,7 +25,7 @@ public class ConsoleLoggerHandler extends Handler
     {
         super();
         setFormatter(new DefaultLogFormatter(config));
-        setLevel(config.level);
+        setLevel(config.getLevel());
     }
 
     /**

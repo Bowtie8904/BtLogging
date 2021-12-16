@@ -13,37 +13,37 @@ public class LoggerConfiguration
     /**
      * The minimum log level.
      */
-    protected Level level;
+    private Level level;
 
     /**
      * A list of packages which should be ignored when searching for the calling method.
      */
-    protected String[] invalidCallerPackages;
+    private String[] invalidCallerPackages;
 
     /**
      * A list of classes which should be ignored when searching for the calling method.
      */
-    protected Class<?>[] invalidCallerClasses;
+    private Class<?>[] invalidCallerClasses;
 
     /**
      * Indicates whether log entries should contain a timestamp.
      */
-    protected boolean printTimestamp = true;
+    private boolean printTimestamp = true;
 
     /**
      * Indicates whether log entries should contain the caller information.
      */
-    protected boolean printCaller = true;
+    private boolean printCaller = true;
 
     /**
      * Indicates whether log entries should contain the thread name.
      */
-    protected boolean printThreadName = true;
+    private boolean printThreadName = true;
 
     /**
      * Indicates whether log entries should contain the log level.
      */
-    protected boolean printLogLevel = true;
+    private boolean printLogLevel = true;
 
     /**
      * Creates a new instance.
@@ -53,6 +53,41 @@ public class LoggerConfiguration
         this.level = Level.ALL;
         this.invalidCallerClasses = new Class<?>[0];
         this.invalidCallerPackages = new String[0];
+    }
+
+    public Level getLevel()
+    {
+        return level;
+    }
+
+    public String[] getInvalidCallerPackages()
+    {
+        return invalidCallerPackages;
+    }
+
+    public Class<?>[] getInvalidCallerClasses()
+    {
+        return invalidCallerClasses;
+    }
+
+    public boolean isPrintTimestamp()
+    {
+        return printTimestamp;
+    }
+
+    public boolean isPrintCaller()
+    {
+        return printCaller;
+    }
+
+    public boolean isPrintThreadName()
+    {
+        return printThreadName;
+    }
+
+    public boolean isPrintLogLevel()
+    {
+        return printLogLevel;
     }
 
     /**
