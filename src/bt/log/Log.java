@@ -175,6 +175,10 @@ public class Log
                     ret += Arrays.toString((Object[])value);
                 }
             }
+            else if (value instanceof String)
+            {
+                ret += "\"" + value + "\"";
+            }
             else
             {
                 ret += value;
@@ -190,8 +194,6 @@ public class Log
 
     private static String formatParameterValues(Object... values)
     {
-        String ret = "";
-
         var stack = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
                                .walk(s -> s.skip(2)
                                            .findFirst())
@@ -200,6 +202,12 @@ public class Log
         Class cls = stack.getDeclaringClass();
         String methodName = stack.getMethodName();
         MethodType type = stack.getMethodType();
+
+        var str = new StringBuilder();
+        str.append(stack.getClassName());
+        str.append(".");
+        str.append(methodName);
+        str.append("(");
 
         try
         {
@@ -211,14 +219,17 @@ public class Log
             for (int i = 0; i < m.getParameters().length; i++)
             {
                 p = m.getParameters()[i];
-                ret += "[" + p.getName() + " = ";
+                str.append(p.getType().getSimpleName() + " = ");
 
                 if (i < values.length)
                 {
-                    ret += valueToString(values[i]);
+                    str.append(valueToString(values[i]));
                 }
 
-                ret += "]";
+                if (i < m.getParameters().length - 1)
+                {
+                    str.append(", ");
+                }
             }
         }
         catch (NoSuchMethodException | SecurityException e)
@@ -226,7 +237,24 @@ public class Log
             error("Failed to format parameter values for entry call", e);
         }
 
-        return ret;
+        str.append(")");
+
+        return str.toString();
+    }
+
+    private static String formatCallerName()
+    {
+        var stack = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
+                               .walk(s -> s.skip(2)
+                                           .findFirst())
+                               .get();
+
+        var str = new StringBuilder();
+        str.append(stack.getClassName());
+        str.append(".");
+        str.append(stack.getMethodName());
+
+        return str.toString();
     }
 
     /**
@@ -234,7 +262,10 @@ public class Log
      */
     public static void entry()
     {
-        trace("ENTRY");
+        if (isTraceEnabled())
+        {
+            trace("ENTRY " + formatCallerName());
+        }
     }
 
     /**
@@ -244,7 +275,10 @@ public class Log
      */
     public static void entry(Object parameterValue)
     {
-        trace("ENTRY " + formatParameterValues(new Object[] { parameterValue }));
+        if (isTraceEnabled())
+        {
+            trace("ENTRY " + formatParameterValues(new Object[] { parameterValue }));
+        }
     }
 
     /**
@@ -255,24 +289,27 @@ public class Log
      */
     public static void entry(Object parameterValue1, Object... parameterValues)
     {
-        Object[] params = null;
-
-        if (parameterValues == null)
+        if (isTraceEnabled())
         {
-            params = new Object[] { parameterValue1 };
-        }
-        else
-        {
-            params = new Object[parameterValues.length + 1];
-            params[0] = parameterValue1;
+            Object[] params = null;
 
-            for (int i = 1; i < params.length; i++)
+            if (parameterValues == null)
             {
-                params[i] = parameterValues[i - 1];
+                params = new Object[] { parameterValue1 };
             }
-        }
+            else
+            {
+                params = new Object[parameterValues.length + 1];
+                params[0] = parameterValue1;
 
-        trace("ENTRY " + formatParameterValues(params));
+                for (int i = 1; i < params.length; i++)
+                {
+                    params[i] = parameterValues[i - 1];
+                }
+            }
+
+            trace("ENTRY " + formatParameterValues(params));
+        }
     }
 
     /**
@@ -282,7 +319,10 @@ public class Log
      */
     public static void exit(Object returnValue)
     {
-        trace("EXIT [return = " + valueToString(returnValue) + "]");
+        if (isTraceEnabled())
+        {
+            trace("EXIT  " + formatCallerName() + " return = " + valueToString(returnValue));
+        }
     }
 
     /**
@@ -290,7 +330,10 @@ public class Log
      */
     public static void exit()
     {
-        trace("EXIT");
+        if (isTraceEnabled())
+        {
+            trace("EXIT  " + formatCallerName());
+        }
     }
 
     /**
