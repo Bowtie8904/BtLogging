@@ -1,6 +1,5 @@
 package bt.log;
 
-import java.io.PrintStream;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -63,20 +62,12 @@ public class ConsoleLoggerHandler extends Handler
 
             if (record.getLevel().equals(Level.SEVERE) || record.getLevel().equals(Level.WARNING))
             {
-                print(System.err, text);
+                System.err.print(text);
             }
             else
             {
-                print(System.out, text);
+                System.out.print(text);
             }
-        }
-    }
-
-    protected void print(PrintStream out, String text)
-    {
-        for (String line : text.split(System.lineSeparator()))
-        {
-            out.print(line);
         }
     }
 

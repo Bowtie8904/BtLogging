@@ -371,7 +371,7 @@ public class DefaultLogFormatter extends Formatter
     public String format(LogRecord record)
     {
         String prefix = getPrefix(record);
-        String text = prefix + " " + getMessageText(record) + "\n";
+        String text = getMessageText(record) + System.lineSeparator();
 
         if (record.getThrown() != null)
         {
@@ -385,6 +385,13 @@ public class DefaultLogFormatter extends Formatter
             }
         }
 
-        return text;
+        String finalText = "";
+
+        for (String line : text.split(System.lineSeparator()))
+        {
+            finalText += prefix + " " + line + System.lineSeparator();
+        }
+
+        return finalText;
     }
 }
