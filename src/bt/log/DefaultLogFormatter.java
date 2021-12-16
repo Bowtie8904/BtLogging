@@ -55,6 +55,14 @@ public class DefaultLogFormatter extends Formatter
     }
 
     /**
+     * Creates a new instance with a default configuration.
+     */
+    public DefaultLogFormatter()
+    {
+        this(new LoggerConfiguration());
+    }
+
+    /**
      * Creates and potentially initially fills the list of invalid caller classes.
      * <p>
      * This is used to properly log the caller method of the logging framework and
