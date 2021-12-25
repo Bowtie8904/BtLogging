@@ -387,7 +387,7 @@ public class DefaultLogFormatter extends Formatter
 
         String finalText = "";
 
-        for (String line : text.split(System.lineSeparator()))
+        for (String line : text.split(System.lineSeparator() + "|\n"))
         {
             finalText += prefix + " " + line + System.lineSeparator();
         }
